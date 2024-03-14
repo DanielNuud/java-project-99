@@ -18,10 +18,8 @@ java {
 	sourceCompatibility = JavaVersion.VERSION_21
 }
 
-configurations {
-	compileOnly {
-		extendsFrom(configurations.annotationProcessor.get())
-	}
+application {
+	mainClass.set("hexlet.code.AppApplication")
 }
 
 repositories {
@@ -53,17 +51,11 @@ dependencies {
 	runtimeOnly("org.postgresql:postgresql:42.6.0")
 }
 
-tasks.withType<Test> {
+tasks.test {
 	useJUnitPlatform()
+	finalizedBy(tasks.jacocoTestReport)
 }
 
-tasks.withType<Checkstyle>().configureEach {
-	reports {
-		xml.required = false
-		html.required = true
-		html.stylesheet = resources.text.fromFile("config/xsl/checkstyle-custom.xsl")
-	}
-}
 
 tasks.jacocoTestReport {
 	reports {
