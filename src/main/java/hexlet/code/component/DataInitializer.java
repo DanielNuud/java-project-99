@@ -20,23 +20,14 @@ public class DataInitializer implements ApplicationRunner {
     private final UserRepository userRepository;
 
     @Autowired
-    private final UserService userService;
+    private final CustomUserDetailsService userService;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        if (userRepository.findByEmail("hexlet@example.com").isEmpty()) {
-            String firstName = "Daniel";
-            String lastName = "Nüüd";
-            String email = "hexlet@example.com";
-            String password = "qwerty";
-
-            UserCreateDTO userData = new UserCreateDTO();
-            userData.setFirstName(firstName);
-            userData.setLastName(lastName);
-            userData.setEmail(email);
-            userData.setPassword(password);
-
-            userService.create(userData);
-        }
+        var email = "hexlet@example.com";
+        var userData = new User();
+        userData.setEmail(email);
+        userData.setPasswordDigest("qwerty");
+        userService.createUser(userData);
     }
 }
