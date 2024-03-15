@@ -28,11 +28,10 @@ public abstract class UserMapper {
         data.setPassword(passwordEncoder.encode(password));
     }
 
-    @Mapping(target = "passwordDigest", source = "password")
+
     public abstract User map(UserCreateDTO dto);
 
-    @Mapping(target = "username", source = "email")
-    @Mapping(target = "password", ignore = true)
+
     public abstract UserDTO map(User model);
 
     public abstract void update(UserUpdateDTO dto, @MappingTarget User model);
