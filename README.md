@@ -13,5 +13,4 @@ https://task-manager-bgr8.onrender.com/
 
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/DanielNuud/java-project-99/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/DanielNuud/java-project-99/actions)
-[![Maintainability](https://api.codeclimate.com/v1/badges/f1f393ffe57c1d74a699/maintainability)](https://codeclimate.com/github/DanielNuud/java-project-99/maintainability)
-
+[![Maintainability](https://api.codeclimate.com/v1/badges/7e3f8bb57291dc70077d/maintainability)](https://codeclimate.com/github/DanielNuud/java-project-99/maintainability)
