@@ -1,39 +1,41 @@
 package hexlet.code.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.EqualsAndHashCode;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "tasks_statuses")
+@Table(name = "tasks")
 @EntityListeners(AuditingEntityListener.class)
-@EqualsAndHashCode(of = "id")
 @Getter
 @Setter
-public class TaskStatus implements BaseEntity {
+public class Task implements BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(unique = true)
     @NotBlank
     private String name;
 
-    @Column(unique = true)
-    @NotBlank
-    private String slug;
+    private int index;
+
+    private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull
+    private TaskStatus taskStatus;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User assignee;
 
     @CreatedDate
     private LocalDate createdAt;
-
-    @OneToMany(mappedBy = "taskStatus")
-    private List<Task> tasks = new ArrayList<>();
 }

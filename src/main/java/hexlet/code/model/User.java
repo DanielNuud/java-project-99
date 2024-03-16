@@ -1,12 +1,6 @@
 package hexlet.code.model;
 
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -20,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -49,6 +44,9 @@ public class User implements UserDetails, BaseEntity {
 
     @NotBlank
     private String passwordDigest;
+
+    @OneToMany(mappedBy = "assignee")
+    private List<Task> tasks = new ArrayList<>();
 
     @Override
     public String getPassword() {
