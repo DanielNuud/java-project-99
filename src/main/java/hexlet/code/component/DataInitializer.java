@@ -1,17 +1,23 @@
 package hexlet.code.component;
 
+import hexlet.code.dto.LabelCreateDTO;
 import hexlet.code.dto.TaskStatusCreateDTO;
 import hexlet.code.model.User;
+import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.service.CustomUserDetailsService;
+import hexlet.code.service.LabelService;
 import hexlet.code.service.TaskStatusService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-
+import java.lang.Exception;
+import io.sentry.Sentry;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -27,8 +33,20 @@ public class DataInitializer implements ApplicationRunner {
     @Autowired
     private final TaskStatusService statusService;
 
+    @Autowired
+    private final LabelRepository labelRepository;
+
+    @Autowired
+    private final LabelService labelService;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        try {
+            throw new Exception("This is a test.");
+        } catch (Exception e) {
+            Sentry.captureException(e);
+        }
+
         var email = "hexlet@example.com";
         var userData = new User();
         userData.setEmail(email);
@@ -50,5 +68,13 @@ public class DataInitializer implements ApplicationRunner {
             }
         }
 
+        List<String> labels = new ArrayList<>(List.of("bug", "feature"));
+        LabelCreateDTO labelData = new LabelCreateDTO();
+        for (String label : labels) {
+            if (labelRepository.findByName(label).isEmpty()) {
+                labelData.setName(label);
+                labelService.create(labelData);
+            }
+        }
     }
 }

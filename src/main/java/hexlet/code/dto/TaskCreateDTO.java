@@ -22,4 +22,6 @@ public class TaskCreateDTO {
     private String status;
 
     private Long assignee_id;
+
+    private List<Long> taskLabelIds = new ArrayList<>();
 }
