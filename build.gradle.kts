@@ -5,6 +5,7 @@ plugins {
 	id("org.springframework.boot") version "3.2.3"
 	id("io.spring.dependency-management") version "1.1.4"
 	id("io.freefair.lombok") version "8.4"
+	id("io.sentry.jvm.gradle") version "4.3.1"
 	checkstyle
 }
 
@@ -19,12 +20,20 @@ application {
 	mainClass.set("hexlet.code.AppApplication")
 }
 
+
 repositories {
 	mavenCentral()
 }
 
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+}
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
+
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-devtools")
@@ -63,4 +72,15 @@ tasks.jacocoTestReport {
 jacoco {
 	toolVersion = "0.8.11"
 	reportsDirectory = layout.buildDirectory.dir("reports/jacoco")
+}
+
+sentry {
+	// Generates a JVM (Java, Kotlin, etc.) source bundle and uploads your source code to Sentry.
+	// This enables source context, allowing you to see your source
+	// code as part of your stack traces in Sentry.
+	includeSourceContext = true
+
+	org = "danielnuud"
+	projectName = "java-spring-boot"
+	authToken = System.getenv("SENTRY_AUTH_TOKEN")
 }
