@@ -14,7 +14,7 @@ public class TaskDTO {
     private Integer index;
     private String content;
     private String status;
-    private Long assignee_id;
+    private Long assigneeId;
     private Date createdAt;
     private List<Long> taskLabelIds;
 }
