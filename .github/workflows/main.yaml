@@ -17,19 +17,20 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 8.6
           arguments: build
         env:
-          SENTRY_AUTH_TOKEN: ${{secrets.SENTRY_AUTH_TOKEN}}
-      - name: Make code coverage report
-        uses: paambaati/codeclimate-action@v5.0.0
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
+      - name: Format code coverage
+        run: |
+          JACOCO_SOURCE_PATH=${{ github.workspace }}/src/main/java ./cc-test-reporter format-coverage ${{ github.workspace }}/app/build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.JAVA_PROJECT_99 }}
-          JACOCO_SOURCE_PATH: ${{github.workspace}}/src/main/java
-        with:
-          debug: true
-          coverageCommand: make report
-          coverageLocations: ${{github.workspace}}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+
+      - name: Upload code coverage
+        run: ./cc-test-reporter upload-coverage
