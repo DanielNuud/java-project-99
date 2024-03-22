@@ -3,8 +3,6 @@ package hexlet.code.controller;
 import hexlet.code.dto.UserCreateDTO;
 import hexlet.code.dto.UserDTO;
 import hexlet.code.dto.UserUpdateDTO;
-import hexlet.code.mapper.UserMapper;
-import hexlet.code.repository.UserRepository;
 import hexlet.code.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +28,6 @@ public class UserController {
     private static final String ONLY_OWNER_BY_ID = """
             @userUtils.getCurrentUser().getId() == #id
         """;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UserMapper userMapper;
 
     @Autowired
     private UserService userService;
