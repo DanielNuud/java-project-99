@@ -5,6 +5,7 @@ import hexlet.code.dto.TaskStatusCreateDTO;
 import hexlet.code.model.User;
 import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.TaskStatusRepository;
+import hexlet.code.repository.UserRepository;
 import hexlet.code.service.CustomUserDetailsService;
 import hexlet.code.service.LabelService;
 import hexlet.code.service.TaskStatusService;
@@ -38,6 +39,9 @@ public class DataInitializer implements ApplicationRunner {
     @Autowired
     private final LabelService labelService;
 
+    @Autowired
+    private final UserRepository userRepository;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         try {
@@ -46,11 +50,14 @@ public class DataInitializer implements ApplicationRunner {
             Sentry.captureException(e);
         }
 
-        var email = "hexlet@example.com";
-        var userData = new User();
-        userData.setEmail(email);
-        userData.setPasswordDigest("qwerty");
-        userService.createUser(userData);
+        if (userRepository.findByEmail("hexlet@example.com").isEmpty()) {
+            var email = "hexlet@example.com";
+            var userData = new User();
+            userData.setEmail(email);
+            userData.setPasswordDigest("qwerty");
+            userService.createUser(userData);
+        }
+
 
         Map<String, String> statuses = new HashMap<>(
                 Map.of("draft", "Draft", "to_review", "To review",
