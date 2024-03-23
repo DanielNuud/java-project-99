@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "tasks_statuses")
+@Table(name = "task_statuses")
 @EntityListeners(AuditingEntityListener.class)
 @EqualsAndHashCode(of = "id")
 @Getter
