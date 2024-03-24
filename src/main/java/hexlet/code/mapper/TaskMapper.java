@@ -23,7 +23,8 @@ import java.util.Set;
 
 @Mapper(uses = { JsonNullableMapper.class, ReferenceMapper.class },
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
-        componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE
+        componentModel = MappingConstants.ComponentModel.SPRING,
+        unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
 public abstract class TaskMapper {
 
@@ -37,6 +38,7 @@ public abstract class TaskMapper {
     @Mapping(source = "status", target = "taskStatus")
     @Mapping(source = "assigneeId", target = "assignee")
     @Mapping(source = "content", target = "description")
+    @Mapping(source = "taskLabelIds", target = "labels")
     public abstract Task map(TaskCreateDTO dto);
 
     @Mapping(source = "name", target = "title")

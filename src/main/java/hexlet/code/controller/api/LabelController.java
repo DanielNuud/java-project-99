@@ -1,4 +1,4 @@
-package hexlet.code.controller;
+package hexlet.code.controller.api;
 
 import hexlet.code.dto.LabelDTO;
 import hexlet.code.dto.LabelCreateDTO;
@@ -29,7 +29,7 @@ public class LabelController {
 
     @GetMapping("")
     public ResponseEntity<List<LabelDTO>> index() {
-        List<LabelDTO> labels = labelService.getAll();
+        var labels = labelService.getAll();
         return ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(labels.size()))
                 .body(labels);

@@ -1,4 +1,4 @@
-package hexlet.code.controller;
+package hexlet.code.controller.api;
 
 import hexlet.code.dto.TaskStatusCreateDTO;
 import hexlet.code.dto.TaskStatusDTO;
@@ -29,8 +29,8 @@ public class TaskStatusController {
 
     @GetMapping(path = "")
     @ResponseStatus(HttpStatus.OK)
-    ResponseEntity<List<TaskStatusDTO>> index() {
-        List<TaskStatusDTO> taskStatuses = taskStatusService.getAll();
+    public ResponseEntity<List<TaskStatusDTO>> index() {
+        var taskStatuses = taskStatusService.getAll();
         return ResponseEntity.status(HttpStatus.OK)
                 .header("X-Total-Count", String.valueOf(taskStatuses.size()))
                 .body(taskStatuses);
@@ -38,19 +38,19 @@ public class TaskStatusController {
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    TaskStatusDTO show(@PathVariable Long id) {
+    public TaskStatusDTO show(@PathVariable Long id) {
         return taskStatusService.findById(id);
     }
 
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
-    TaskStatusDTO create(@Valid @RequestBody TaskStatusCreateDTO taskStatusCreateDTO) {
+    public TaskStatusDTO create(@Valid @RequestBody TaskStatusCreateDTO taskStatusCreateDTO) {
         return taskStatusService.create(taskStatusCreateDTO);
     }
 
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    TaskStatusDTO update(@PathVariable Long id, @Valid @RequestBody TaskStatusUpdateDTO taskStatusUpdateDTO) {
+    public TaskStatusDTO update(@PathVariable Long id, @Valid @RequestBody TaskStatusUpdateDTO taskStatusUpdateDTO) {
         return taskStatusService.update(taskStatusUpdateDTO, id);
     }
 

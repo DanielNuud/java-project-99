@@ -1,4 +1,4 @@
-package hexlet.code.controller;
+package hexlet.code.controller.api;
 
 import hexlet.code.dto.UserCreateDTO;
 import hexlet.code.dto.UserDTO;
@@ -34,8 +34,8 @@ public class UserController {
 
     @GetMapping(path = "")
     @ResponseStatus(HttpStatus.OK)
-    ResponseEntity<List<UserDTO>> index() {
-        List<UserDTO> users = userService.getAll();
+    public ResponseEntity<List<UserDTO>> index() {
+        var users = userService.getAll();
         return ResponseEntity.status(HttpStatus.OK)
                 .header("X-Total-Count", String.valueOf(users.size()))
                 .body(users);
@@ -43,27 +43,27 @@ public class UserController {
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    UserDTO show(@PathVariable Long id) {
+    public UserDTO show(@PathVariable Long id) {
         return userService.findById(id);
     }
 
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
-    UserDTO create(@Valid @RequestBody UserCreateDTO userCreateDTO) {
+    public UserDTO create(@Valid @RequestBody UserCreateDTO userCreateDTO) {
         return userService.create(userCreateDTO);
     }
 
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize(ONLY_OWNER_BY_ID)
-    UserDTO update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO userUpdateDTO) {
+    public UserDTO update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO userUpdateDTO) {
         return userService.update(userUpdateDTO, id);
     }
 
     @DeleteMapping(path = "/{id}")
     @PreAuthorize(ONLY_OWNER_BY_ID)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void destroy(@PathVariable Long id) {
+    public void destroy(@PathVariable Long id) {
         userService.delete(id);
     }
 }
