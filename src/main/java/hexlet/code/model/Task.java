@@ -32,7 +32,7 @@ import java.util.Set;
 public class Task implements BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @ToString.Include
     @EqualsAndHashCode.Include
     private Long id;
