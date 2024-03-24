@@ -15,8 +15,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -36,7 +36,7 @@ public class Label {
     private String name;
 
     @CreatedDate
-    private Date createdAt;
+    private LocalDate createdAt;
 
     @ManyToMany(mappedBy = "labels")
     private List<Task> tasks = new ArrayList<>();
