@@ -22,5 +22,4 @@ public class AppApplication {
     return new Faker(new Locale("en", "US"));
   }
 
-
 }

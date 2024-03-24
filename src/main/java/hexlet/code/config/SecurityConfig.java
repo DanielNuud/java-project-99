@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -38,12 +39,15 @@ public class SecurityConfig {
             throws Exception {
         var mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
         return http
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(mvcMatcherBuilder.pattern("/")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern("/api/login")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern("/index.html")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern("/assets/**")).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern("/v3/api-docs/**")).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern("/swagger.html")).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern("/swagger-ui/**")).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer((rs) -> rs.jwt((jwt) -> jwt.decoder(jwtDecoder)))
