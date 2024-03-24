@@ -23,12 +23,9 @@ public class UserUtils {
         return userRepository.findByEmail(email).get();
     }
 
-    public boolean isUser(long userId) {
-        var authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return false;
-        }
+    public boolean isCurrentUser(long userId) {
         var userEmail = userRepository.findById(userId).get().getEmail();
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
         return userEmail.equals(authentication.getName());
     }
 

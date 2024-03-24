@@ -25,10 +25,6 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private static final String ONLY_OWNER_BY_ID = """
-            @userUtils.getCurrentUser().getId() == #id
-        """;
-
     @Autowired
     private UserService userService;
 
@@ -55,13 +51,13 @@ public class UserController {
 
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize(ONLY_OWNER_BY_ID)
+    @PreAuthorize("@userUtils.isCurrentUser(#id)")
     public UserDTO update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO userUpdateDTO) {
         return userService.update(userUpdateDTO, id);
     }
 
     @DeleteMapping(path = "/{id}")
-    @PreAuthorize(ONLY_OWNER_BY_ID)
+    @PreAuthorize("@userUtils.isCurrentUser(#id)")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void destroy(@PathVariable Long id) {
         userService.delete(id);
